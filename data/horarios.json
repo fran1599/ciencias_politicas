@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "materia": "Historia Social y Política I",
+    "codigo": "613",
+    "tipo": "Práctico",
+    "dia": "lunes",
+    "hora_inicio": 20,
+    "hora_fin": 22,
+    "aula": "Baterías A - A2",
+    "docentes": ["Luparello, Velia"]
+  },
+  {
+    "id": 2,
+    "materia": "Historia Social y Política I",
+    "codigo": "613",
+    "tipo": "Teórico",
+    "dia": "lunes",
+    "hora_inicio": 18,
+    "hora_fin": 20,
+    "aula": "Baterías A - A2",
+    "docentes": ["Mignon, Carlos Gonzalo"]
+  },
+  {
+    "id": 3,
+    "materia": "Sociología Sistemática",
+    "codigo": "611",
+    "tipo": "Práctico",
+    "dia": "lunes",
+    "hora_inicio": 16,
+    "hora_fin": 18,
+    "aula": "Baterías C - C2",
+    "docentes": ["Romanutti, Virginia", "Ramírez, Mercedes M."]
+  },
+  {
+    "id": 4,
+    "materia": "Fundamentos de la Ciencia Política",
+    "codigo": "610",
+    "tipo": "Teórico",
+    "dia": "martes",
+    "hora_inicio": 18,
+    "hora_fin": 20,
+    "aula": "Baterías C - C500",
+    "docentes": ["Vázquez, Guillermo", "Falvo, Marina", "Moretti Basso, Ianina", "Bruno Lucas, Ezequiel"]
+  },
+  {
+    "id": 5,
+    "materia": "Sociología Sistemática",
+    "codigo": "611",
+    "tipo": "Teórico",
+    "dia": "martes",
+    "hora_inicio": 15,
+    "hora_fin": 18,
+    "aula": "Baterías C - C9",
+    "docentes": ["Hernández, Andrés Eduardo", "Servetto, Silvia María"]
+  },
+  {
+    "id": 6,
+    "materia": "Historia Social y Política I",
+    "codigo": "613",
+    "tipo": "Teórico",
+    "dia": "miércoles",
+    "hora_inicio": 18,
+    "hora_fin": 20,
+    "aula": "Baterías C - C500",
+    "docentes": ["Mignon, Carlos Gonzalo"]
+  },
+  {
+    "id": 7,
+    "materia": "Historia Social y Política I",
+    "codigo": "613",
+    "tipo": "Práctico",
+    "dia": "miércoles",
+    "hora_inicio": 16,
+    "hora_fin": 18,
+    "aula": "Baterías C - C9",
+    "docentes": ["Schaller, Paula"]
+  },
+  {
+    "id": 8,
+    "materia": "Introducción al Conocimiento en las Ciencias Sociales",
+    "codigo": "612",
+    "tipo": "Teórico-Práctico",
+    "dia": "miércoles",
+    "hora_inicio": 14,
+    "hora_fin": 16,
+    "aula": "Baterías C - C5",
+    "docentes": ["Torrano, Maria Andrea", "Cristini, Maria Romina", "Palmero, Paula Mariana", "Busquier, Lucía María"]
+  },
+  {
+    "id": 9,
+    "materia": "Fundamentos de la Ciencia Política",
+    "codigo": "610",
+    "tipo": "Práctico",
+    "dia": "jueves",
+    "hora_inicio": 18,
+    "hora_fin": 20,
+    "aula": "Baterías C - C500",
+    "docentes": ["Vázquez, Guillermo", "Falvo, Marina", "Moretti Basso, Ianina", "Bruno Lucas, Ezequiel"]
+  },
+  {
+    "id": 10,
+    "materia": "Sociología Sistemática",
+    "codigo": "611",
+    "tipo": "Práctico",
+    "dia": "jueves",
+    "hora_inicio": 16,
+    "hora_fin": 18,
+    "aula": "Baterías C - C7",
+    "docentes": ["Quattrini, Diego"]
+  }
+]

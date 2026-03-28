@@ -1,0 +1,117 @@
+[
+  {
+    "id": "hist-social-pol-1",
+    "nombre": "Historia Social y Política I",
+    "subtitulo": "Contemporánea",
+    "codigo": "613",
+    "cuatrimestre": 1,
+    "anio": 1,
+    "color": "hist",
+    "programa": {
+      "descripcion": "La revolución industrial, el surgimiento del capitalismo y el colapso del Antiguo Régimen. Nacionalismos, imperialismos, guerras mundiales y conformación del orden globalizado.",
+      "unidades": [
+        "Revolución industrial y surgimiento del capitalismo",
+        "Expansión capitalista, taylorismo y movimientos sociales",
+        "Nacionalismos e imperialismos — Primera Guerra Mundial",
+        "Estados socialistas en el período de entreguerras",
+        "Crisis del capitalismo y estados de bienestar",
+        "Segunda Guerra Mundial y mundo bipolar",
+        "Movimientos descolonizadores y liberación nacional",
+        "Crisis de los '70 y legitimación neoliberal",
+        "Nuevo orden mundial globalizado"
+      ]
+    },
+    "docentes": {
+      "teorico": ["Mignon, Carlos Gonzalo"],
+      "practico": ["Luparello, Velia", "Schaller, Paula"]
+    },
+    "materiales": [],
+    "notebook_lm": [],
+    "notas": [],
+    "parciales": []
+  },
+  {
+    "id": "sociologia-sistematica",
+    "nombre": "Sociología Sistemática",
+    "subtitulo": "",
+    "codigo": "611",
+    "cuatrimestre": 1,
+    "anio": 1,
+    "color": "socio",
+    "programa": {
+      "descripcion": "Las relaciones sociales como unidad de análisis. Cultura, socialización, estratificación, cambio social y conflicto. Introducción al desarrollo histórico de la Teoría Sociológica.",
+      "unidades": [
+        "Acción social e interacción — los agregados sociales",
+        "Cultura y sociedad — procesos de socialización",
+        "Conformidad y desviación — control social",
+        "Desigualdad, estratificación y movilidad",
+        "Cambio social, crisis y conflictos sociales",
+        "Desarrollo histórico de la Teoría Sociológica"
+      ]
+    },
+    "docentes": {
+      "teorico": ["Hernández, Andrés Eduardo", "Servetto, Silvia María"],
+      "practico": ["Romanutti, Virginia", "Ramírez, Mercedes M.", "Quattrini, Diego"]
+    },
+    "materiales": [],
+    "notebook_lm": [],
+    "notas": [],
+    "parciales": []
+  },
+  {
+    "id": "fund-ciencia-politica",
+    "nombre": "Fundamentos de la Ciencia Política",
+    "subtitulo": "",
+    "codigo": "610",
+    "cuatrimestre": 1,
+    "anio": 1,
+    "color": "fund",
+    "programa": {
+      "descripcion": "Enfoques normativos, empírico-analíticos y críticos de la Ciencia Política. El Poder, el Estado, regímenes políticos, democracia y participación.",
+      "unidades": [
+        "La Ciencia Política y sus enfoques",
+        "El Poder — elitismo, pluralismo y marxismo",
+        "El Estado — surgimiento comparativo centro/periferia",
+        "Formas de gobierno — clasificaciones históricas",
+        "Regímenes políticos — democracia y autoritarismo",
+        "Representación y participación",
+        "Partidos, grupos de presión y movimientos sociales"
+      ]
+    },
+    "docentes": {
+      "teorico": ["Vázquez, Guillermo", "Falvo, Marina", "Moretti Basso, Ianina", "Bruno Lucas, Ezequiel"],
+      "practico": ["Vázquez, Guillermo", "Falvo, Marina", "Moretti Basso, Ianina", "Bruno Lucas, Ezequiel"]
+    },
+    "materiales": [],
+    "notebook_lm": [],
+    "notas": [],
+    "parciales": []
+  },
+  {
+    "id": "intro-conocimiento-ccss",
+    "nombre": "Introducción al Conocimiento en las Ciencias Sociales",
+    "subtitulo": "",
+    "codigo": "612",
+    "cuatrimestre": 1,
+    "anio": 1,
+    "color": "intro",
+    "programa": {
+      "descripcion": "La especificidad del conocimiento en las Ciencias Sociales. Principales corrientes epistemológicas y tradiciones metodológicas en Sociología y Ciencia Política.",
+      "unidades": [
+        "Especificidad del conocimiento en las CCSS",
+        "Núcleos problemáticos en la Epistemología de las CCSS",
+        "Principales corrientes epistemológicas",
+        "Tradiciones metodológicas en Sociología",
+        "Tradiciones metodológicas en Ciencia Política"
+      ]
+    },
+    "docentes": {
+      "teorico": ["Torrano, Maria Andrea", "Cristini, Maria Romina", "Palmero, Paula Mariana", "Busquier, Lucía María"],
+      "practico": []
+    },
+    "materiales": [],
+    "notebook_lm": [],
+    "notas": [],
+    "parciales": []
+  }
+]
