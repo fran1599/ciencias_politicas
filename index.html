@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ciencias Políticas — UNC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span class="site-title"><em>Ciencias Políticas</em> — UNC</span>
+    <span class="site-sub">Licenciatura · Facultad de Ciencias Sociales</span>
+  </div>
+  <nav>
+    <ul class="tabs">
+      <li><button class="tab-btn active" data-tab="horarios">Horarios</button></li>
+      <li><button class="tab-btn" data-tab="materias">Materias</button></li>
+      <li><button class="tab-btn" data-tab="correlatividades">Correlatividades</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── HORARIOS ────────────────────────────────────────────── -->
+  <section id="panel-horarios" class="tab-panel active">
+    <p class="section-label">1er Semestre · 1er Año · 2025</p>
+
+    <div class="horarios-legend">
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#26215c;border:1px solid #7f77dd"></span>
+        Historia Social y Política I
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#04342c;border:1px solid #1d9e75"></span>
+        Sociología Sistemática
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#412402;border:1px solid #ba7517"></span>
+        Fundamentos de la Ciencia Política
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#3a1010;border:1px solid #a32d2d"></span>
+        Intro al Conocimiento en las CCSS
+      </span>
+    </div>
+
+    <div class="grid-scroll">
+      <div class="schedule-grid" id="schedule-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── MATERIAS ────────────────────────────────────────────── -->
+  <section id="panel-materias" class="tab-panel">
+    <p class="section-label">1er Año · Materias del Ciclo Inicial</p>
+    <div class="materias-grid" id="materias-container"></div>
+  </section>
+
+  <!-- ── CORRELATIVIDADES ────────────────────────────────────── -->
+  <section id="panel-correlatividades" class="tab-panel">
+    <p class="section-label">Plan de estudios completo — Licenciatura en Ciencia Política</p>
+
+    <div class="correl-legend">
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#3a3a38;border:1px solid #888780"></span>
+        Nivelación
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#2e2980;border:1px solid #7f77dd"></span>
+        Ciclo Inicial Común
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#0a4a38;border:1px solid #1d9e75"></span>
+        Formación Específica
+      </span>
+      <span class="leg-item">
+        <span class="leg-dot" style="background:#4a2e08;border:1px solid #ba7517"></span>
+        Formación Profesional
+      </span>
+    </div>
+
+    <div id="correl-canvas-wrap">
+      <canvas id="correl-canvas"></canvas>
+    </div>
+  </section>
+
+</main>
+
+<div id="tooltip"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
