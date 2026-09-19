@@ -8,6 +8,13 @@
       content="Atlas personal para estudiar Ciencia Política con trazabilidad académica y memoria local."
     />
     <title>Atlas · Ciencia Política</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem("atlas-theme");
+        const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
@@ -28,6 +35,12 @@
           </a>
           <a data-route="glossary" href="#/glosario">
             <span aria-hidden="true">◇</span> Glosario
+          </a>
+          <a data-route="activities" href="#/actividades">
+            <span aria-hidden="true">✓</span> Actividades
+          </a>
+          <a data-route="library" href="#/biblioteca">
+            <span aria-hidden="true">▤</span> Biblioteca
           </a>
         </nav>
 
@@ -52,7 +65,10 @@
         <header class="topbar">
           <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
           <div class="breadcrumb" id="breadcrumb">Mi recorrido</div>
-          <div class="source-status"><span></span> Piloto · fuentes 2026</div>
+          <div class="topbar-actions">
+            <div class="source-status"><span></span> Piloto · fuentes 2026</div>
+            <button class="theme-button" id="theme-button" type="button" aria-label="Activar modo oscuro" title="Cambiar tema">◐</button>
+          </div>
         </header>
         <main id="contenido" tabindex="-1"></main>
       </div>
