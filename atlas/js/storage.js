@@ -61,9 +61,10 @@ export async function getAllRecords() {
 }
 
 export async function replaceAllRecords(records) {
+  const allowedTypes = new Set(["reading", "concept", "activity"]);
   const normalized = records.map(record => ({
     id: String(record.id),
-    type: record.type === "concept" ? "concept" : "reading",
+    type: allowedTypes.has(record.type) ? record.type : "reading",
     note: typeof record.note === "string" ? record.note : "",
     level: Math.max(0, Math.min(5, Number(record.level) || 0)),
     updatedAt: typeof record.updatedAt === "string" ? record.updatedAt : new Date().toISOString()
