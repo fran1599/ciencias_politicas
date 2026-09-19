@@ -154,7 +154,30 @@ El Atlas combinará:
 - **metacognición:** percepción de comprensión, dudas y cambios de interpretación;
 - **producción:** transformación de lo estudiado en argumentos, trabajos o piezas del portafolio.
 
-No se incorporará gamificación por sí misma. Todo mecanismo de progreso debe representar una actividad académica real.
+### 7.1. Gamificación pedagógica y progresión
+
+La identidad de la Memory Card puede integrarse con una gamificación sobria, inspirada en plataformas de aprendizaje por trayectos. Su función no será premiar clics, tiempo de pantalla o consumo pasivo, sino hacer visible el avance en capacidades reales.
+
+Cada texto, concepto o unidad podrá avanzar por niveles:
+
+1. **Reconocer:** identificar el problema, los términos y la ubicación curricular.
+2. **Comprender:** explicar la tesis o el concepto con palabras propias y responder preguntas básicas.
+3. **Relacionar:** establecer vínculos justificados con autores, conceptos, procesos o materias.
+4. **Discutir:** comparar interpretaciones, reconocer tensiones y formular objeciones.
+5. **Producir:** aplicar lo aprendido en un argumento, análisis, caso o producción académica.
+
+El progreso combinará evidencia de actividad con autoevaluación. Completar una lectura o abrir una página no equivaldrá automáticamente a dominarla.
+
+La interfaz podrá utilizar metáforas coherentes con la Memory Card:
+
+- recorridos o mapas para materias y unidades;
+- misiones de estudio para actividades concretas;
+- puntos de guardado para cierres parciales;
+- niveles de comprensión;
+- logros vinculados a producciones o relaciones significativas;
+- indicadores de progreso por materia, unidad y capacidad.
+
+Los indicadores deberán permitir ver qué se hizo y qué falta sin reducir el aprendizaje a un porcentaje único. El progreso cuantificable será una ayuda para decidir el próximo paso, no una medición definitiva del conocimiento.
 
 ---
 
@@ -350,6 +373,8 @@ La Memory Card representa la memoria académica privada y portable del usuario. 
 - materias activas;
 - estado de cursado;
 - progreso de lectura;
+- niveles pedagógicos alcanzados y evidencias asociadas;
+- misiones o actividades de estudio;
 - notas;
 - dudas;
 - valoraciones de comprensión;
