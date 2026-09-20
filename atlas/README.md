@@ -1,4 +1,4 @@
-# Atlas personal · prototipo v0.3
+# Atlas personal · prototipo v0.4
 
 Prototipo estático, aislado del sitio principal, para convertir el programa de Economía Política I en un recorrido de estudio navegable y conservar localmente la memoria académica personal.
 
@@ -11,6 +11,9 @@ Prototipo estático, aislado del sitio principal, para convertir el programa de 
 - biblioteca con programa, cronograma, guía orientadora, compendio y materiales de apoyo enlazados;
 - cuatro reconstrucciones de lectura y doce conceptos relacionados;
 - siete actividades alineadas al método de estudio y al momento de la cursada;
+- onboarding breve de primera entrada, reabrible desde la ayuda global;
+- portada orientada por intenciones: ubicarse, comprender o practicar;
+- ayudas contextuales en las herramientas principales;
 - modo oscuro persistente;
 - vigilancia epistémica visible mediante capas de procedencia;
 - niveles de elaboración: Reconocer, Comprender, Relacionar, Discutir y Producir;
@@ -40,3 +43,9 @@ Abrir `http://localhost:8000/atlas/`.
 - documento rector del Atlas.
 
 El contenido público es una reconstrucción pedagógica breve y trazable. Los materiales originales no se copian en el sitio: permanecen en Drive y se enlazan con su rango de páginas en el compendio. Las elaboraciones personales permanecen en el navegador hasta que la persona exporta su Memory Card.
+
+## Criterio de contenido visible
+
+La interfaz muestra sólo información necesaria para estudiar, orientarse, interpretar una etiqueta o comprender una función. Las hipótesis de evolución, decisiones arquitectónicas, estados de implementación y alternativas futuras pertenecen a la documentación del proyecto y no deben aparecer como texto explicativo dentro del Atlas.
+
+La guía inicial presenta únicamente tres decisiones de uso: elegir una tarea, reconocer la procedencia del contenido y guardar el proceso personal. No intenta recorrer todas las pantallas. Su cierre queda registrado en `localStorage` y puede reabrirse desde el botón de ayuda o desde la Memory Card.

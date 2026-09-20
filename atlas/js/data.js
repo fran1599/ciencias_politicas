@@ -14,7 +14,7 @@ export const atlasData = {
     name: "Economía Política I",
     institution: "FCS · UNC",
     year: 2026,
-    pilotStatus: "Programa completo · contenido progresivo",
+    pilotStatus: "Materia activa · fuentes 2026",
     question: "¿Cómo se constituyen históricamente las categorías económicas y qué permiten comprender de las relaciones políticas y sociales?",
     description: "Un recorrido para estudiar la constitución histórica de la economía política, discutir la autonomía aparente de lo económico y apropiarse críticamente de herramientas básicas de micro y macroeconomía.",
     programUrl: program2026,
@@ -24,7 +24,7 @@ export const atlasData = {
       {
         id: "unidad-1", number: 1, title: "El lugar de la economía y sus significados",
         question: "¿Qué llamamos economía y qué consecuencias tiene esa definición?",
-        status: "Desarrollada", statusKind: "developed", guideUrl: guideU1, summaryUrl: summaryU1,
+        status: "Vista en cursada", statusKind: "developed", guideUrl: guideU1, summaryUrl: summaryU1,
         bibliography: [
           { id: "polanyi-aristoteles", author: "Karl Polanyi", title: "Aristóteles descubre la economía", reference: "Polanyi (2012)", pages: "PDF 13–30", available: true },
           { id: "polanyi-mercado-autorregulado", author: "Karl Polanyi", title: "El mercado autorregulado y las mercancías ficticias", reference: "Polanyi (1944/2003), cap. VI", pages: "PDF 31–38", available: true },
@@ -35,7 +35,7 @@ export const atlasData = {
       {
         id: "unidad-2", number: 2, title: "Interés, mercado y orden social",
         question: "¿Cómo llegó el mercado a imaginarse como principio de regulación social y política?",
-        status: "Desarrollada", statusKind: "developed", guideUrl: guideU2, summaryUrl: summaryU2,
+        status: "Vista en cursada", statusKind: "developed", guideUrl: guideU2, summaryUrl: summaryU2,
         bibliography: [
           { id: "hirschman-pasiones-intereses", author: "Albert O. Hirschman", title: "Cómo se recurrió a los intereses para contrarrestar las pasiones", reference: "Hirschman (1978), primera parte", pages: "PDF 149–180", available: true },
           { author: "Pierre Rosanvallon", title: "El mercado y las tres utopías liberales; caps. 2 y 3", reference: "Rosanvallon (1979/2006)", pages: "PDF 183–214", available: false },
@@ -46,7 +46,7 @@ export const atlasData = {
       {
         id: "unidad-3", number: 3, title: "Los fundamentos del valor",
         question: "¿Cómo explican las teorías clásica y marginalista el valor y el intercambio?",
-        status: "En curso", statusKind: "current", guideUrl: readingGuide,
+        status: "En cursada", statusKind: "current", guideUrl: readingGuide,
         bibliography: [
           { author: "Adam Smith", title: "Origen y uso del dinero; precio real y nominal; componentes del precio", reference: "Smith (1776/1988), I.4–6", pages: "PDF 277–294", available: false },
           { author: "Axel Kicillof", title: "Adam Smith y la formación del sistema clásico", reference: "Kicillof (2010), lección 2", pages: "PDF 295–320", available: false },
@@ -57,7 +57,7 @@ export const atlasData = {
       {
         id: "unidad-4", number: 4, title: "Marshall y la síntesis neoclásica",
         question: "¿Cómo se construyen el equilibrio, la oferta y la demanda en la microeconomía neoclásica?",
-        status: "Mapeada", statusKind: "mapped", guideUrl: readingGuide,
+        status: "Programada", statusKind: "mapped", guideUrl: readingGuide,
         bibliography: [
           { author: "Alfred Marshall", title: "Introducción; Naturaleza de la economía", reference: "Marshall (1890/1954), caps. I y II", pages: "PDF 359–372", available: false },
           { author: "Axel Kicillof", title: "El marginalismo de Marshall", reference: "Kicillof (2010), lección 5", pages: "PDF 373–397", available: false }
@@ -66,7 +66,7 @@ export const atlasData = {
       {
         id: "unidad-5", number: 5, title: "Keynes y conceptos básicos de macroeconomía",
         question: "¿Cómo transforma Keynes el problema del empleo, la demanda efectiva y la intervención estatal?",
-        status: "Mapeada", statusKind: "mapped", guideUrl: readingGuide,
+        status: "Programada", statusKind: "mapped", guideUrl: readingGuide,
         bibliography: [
           { author: "Raúl Prebisch", title: "Prefacio", reference: "Prebisch (1947/1971)", pages: "PDF 401–405", available: false },
           { author: "John Maynard Keynes", title: "La teoría general; postulados clásicos; demanda efectiva", reference: "Keynes (1936/1956), caps. 1–3", pages: "PDF 409–426", available: false },
