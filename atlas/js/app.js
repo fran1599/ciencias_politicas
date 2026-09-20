@@ -398,6 +398,16 @@ document.addEventListener("click", event => {
   if (helpTrigger) openHelp(helpTrigger.dataset.helpTopic);
   if (event.target.closest("[data-open-guide]")) openOnboarding();
 });
+document.addEventListener("focusin", event => event.target.closest?.("[data-tooltip]")?.classList.remove("tooltip-dismissed"));
+document.addEventListener("pointerout", event => {
+  const trigger = event.target.closest?.("[data-tooltip]");
+  if (trigger && !trigger.contains(event.relatedTarget)) trigger.classList.remove("tooltip-dismissed");
+});
+document.addEventListener("keydown", event => {
+  if (event.key !== "Escape") return;
+  document.querySelectorAll("[data-tooltip]").forEach(trigger => trigger.classList.add("tooltip-dismissed"));
+  if (document.activeElement?.matches?.("[data-tooltip]")) document.activeElement.blur();
+});
 
 document.querySelector("#export-memory").addEventListener("click", async () => {
   const payload = await exportMemory();
