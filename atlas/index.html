@@ -56,6 +56,7 @@
             <label class="button button-small button-ghost" for="import-memory">Importar</label>
             <input id="import-memory" type="file" accept="application/json,.json" hidden />
           </div>
+          <button class="memory-help" id="memory-help" type="button">¿Cómo funciona?</button>
         </section>
 
         <p class="privacy-note"><span aria-hidden="true">●</span> Privado por diseño</p>
@@ -66,13 +67,48 @@
           <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
           <div class="breadcrumb" id="breadcrumb">Mi recorrido</div>
           <div class="topbar-actions">
-            <div class="source-status"><span></span> Piloto · fuentes 2026</div>
+            <div class="source-status"><span></span> Fuentes contrastadas · 2026</div>
+            <button class="icon-button" id="help-button" type="button" aria-label="Abrir guía de inicio" title="Cómo usar el Atlas">?</button>
             <button class="theme-button" id="theme-button" type="button" aria-label="Activar modo oscuro" title="Cambiar tema">◐</button>
           </div>
         </header>
         <main id="contenido" tabindex="-1"></main>
       </div>
     </div>
+
+    <dialog class="onboarding" id="onboarding-dialog" aria-labelledby="onboarding-title">
+      <div class="onboarding-sheet">
+        <button class="dialog-close" id="onboarding-close" type="button" aria-label="Cerrar guía">×</button>
+        <p class="eyebrow">Guía de inicio</p>
+        <h2 id="onboarding-title">El Atlas te ayuda a decidir qué estudiar y a no perder lo que vas comprendiendo.</h2>
+        <p class="onboarding-intro">No hace falta recorrer todo. Entrá por la necesidad que tengas hoy y profundizá sólo cuando te sirva.</p>
+
+        <ol class="onboarding-steps">
+          <li>
+            <span class="step-number">1</span>
+            <div><strong>Elegí una tarea</strong><p>Ubicate en una materia, comprendé un concepto o practicá con una actividad.</p></div>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <div><strong>Reconocé qué estás leyendo</strong><p>El Atlas diferencia programa, argumento del autor, reconstrucción pedagógica y lectura crítica.</p></div>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <div><strong>Guardá tu proceso</strong><p>Tus notas y niveles quedan sólo en este dispositivo. La Memory Card permite exportarlos e importarlos.</p></div>
+          </li>
+        </ol>
+
+        <div class="onboarding-note">
+          <strong>Una regla para estudiar acá</strong>
+          <p>Las explicaciones del Atlas orientan la lectura: no reemplazan el texto original. Las fuentes están enlazadas para que puedas volver a ellas.</p>
+        </div>
+
+        <div class="onboarding-actions">
+          <a class="button" id="onboarding-start" href="#/materia/economia-politica-i">Empezar por la materia activa</a>
+          <button class="button button-ghost" id="onboarding-dismiss" type="button">Explorar por mi cuenta</button>
+        </div>
+      </div>
+    </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="./js/app.js"></script>
