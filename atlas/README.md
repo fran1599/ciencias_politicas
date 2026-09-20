@@ -57,3 +57,7 @@ La interfaz muestra sólo información necesaria para estudiar, orientarse, inte
 La guía inicial presenta únicamente tres decisiones de uso: elegir una tarea, reconocer la procedencia del contenido y guardar el proceso personal. No intenta recorrer todas las pantallas. Su cierre queda registrado en `localStorage`.
 
 El botón global `?` ofrece ayuda específica para la pantalla actual. Los accesos del inicio y la Memory Card usan el mismo símbolo para la misma acción. No se mezclan botones de ayuda con desplegables explicativos.
+
+## Investigación de diseño
+
+La propuesta de evolución de arquitectura de información, aprendizaje y navegación se documenta en [Investigación de diseño para Atlas v0.7](./docs/investigacion-arquitectura-informacion-v0.7.md). Estas decisiones no se presentan como contenido dentro del Atlas.
