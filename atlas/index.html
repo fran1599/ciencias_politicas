@@ -56,7 +56,7 @@
             <label class="button button-small button-ghost" for="import-memory">Importar</label>
             <input id="import-memory" type="file" accept="application/json,.json" hidden />
           </div>
-          <button class="memory-help" id="memory-help" type="button">¿Cómo funciona?</button>
+          <button class="memory-help" id="memory-help" type="button" aria-label="Ayuda sobre la Memory Card" title="Ayuda sobre la Memory Card">?</button>
         </section>
 
         <p class="privacy-note"><span aria-hidden="true">●</span> Privado por diseño</p>
@@ -68,7 +68,7 @@
           <div class="breadcrumb" id="breadcrumb">Mi recorrido</div>
           <div class="topbar-actions">
             <div class="source-status"><span></span> Fuentes contrastadas · 2026</div>
-            <button class="icon-button" id="help-button" type="button" aria-label="Abrir guía de inicio" title="Cómo usar el Atlas">?</button>
+            <button class="icon-button" id="help-button" type="button" aria-label="Ayuda sobre esta pantalla" title="Ayuda sobre esta pantalla">?</button>
             <button class="theme-button" id="theme-button" type="button" aria-label="Activar modo oscuro" title="Cambiar tema">◐</button>
           </div>
         </header>
@@ -107,6 +107,16 @@
           <a class="button" id="onboarding-start" href="#/materia/economia-politica-i">Empezar por la materia activa</a>
           <button class="button button-ghost" id="onboarding-dismiss" type="button">Explorar por mi cuenta</button>
         </div>
+      </div>
+    </dialog>
+
+    <dialog class="onboarding help-dialog" id="help-dialog" aria-labelledby="help-dialog-title">
+      <div class="onboarding-sheet">
+        <button class="dialog-close" id="help-dialog-close" type="button" aria-label="Cerrar ayuda">×</button>
+        <p class="eyebrow" id="help-dialog-eyebrow">Ayuda</p>
+        <h2 id="help-dialog-title">Cómo usar esta parte</h2>
+        <p class="onboarding-intro" id="help-dialog-intro"></p>
+        <ul class="help-steps" id="help-dialog-steps"></ul>
       </div>
     </dialog>
 
