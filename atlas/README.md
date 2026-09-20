@@ -1,15 +1,16 @@
-# Atlas personal · prototipo v0.2
+# Atlas personal · prototipo v0.3
 
-Prototipo estático, aislado del sitio actual, para validar una unidad completa de aprendizaje antes de ampliar el sistema.
+Prototipo estático, aislado del sitio principal, para convertir el programa de Economía Política I en un recorrido de estudio navegable y conservar localmente la memoria académica personal.
 
 ## Alcance
 
-- piloto: Economía Política I, Unidades 1 y 2 (FCS-UNC, 2026);
+- piloto: Economía Política I (FCS-UNC, 2026), con sus cinco unidades;
 - navegación materia → lectura → concepto → relaciones;
-- programa navegable con doce lecturas y cobertura interna explícita;
-- biblioteca con enlaces verificados y faltantes documentales visibles;
-- cuatro reconstrucciones de lectura y nueve conceptos relacionados;
-- cinco actividades alineadas al método de estudio;
+- veinte entradas de bibliografía básica verificadas contra el programa y localizadas dentro del compendio de 520 páginas;
+- estado temporal explícito: unidades desarrolladas, en curso y mapeadas;
+- biblioteca con programa, cronograma, guía orientadora, compendio y materiales de apoyo enlazados;
+- cuatro reconstrucciones de lectura y doce conceptos relacionados;
+- siete actividades alineadas al método de estudio y al momento de la cursada;
 - modo oscuro persistente;
 - vigilancia epistémica visible mediante capas de procedencia;
 - niveles de elaboración: Reconocer, Comprender, Relacionar, Discutir y Producir;
@@ -27,11 +28,15 @@ python3 -m http.server 8000
 
 Abrir `http://localhost:8000/atlas/`.
 
-## Fuentes académicas del piloto
+## Fuentes académicas
 
+- Programa 2026 de Economía Política I;
+- Cronograma de desarrollo de contenidos 2026;
+- Compendio bibliográfico 2026;
+- Guía orientadora general de lectura;
 - README del espacio de Economía Política I;
 - Guías de lectura de Unidades 1 y 2;
 - Resúmenes ampliados de Unidades 1 y 2;
 - documento rector del Atlas.
 
-El contenido público es una reconstrucción pedagógica breve y trazable. Los materiales originales permanecen en Drive; las elaboraciones personales permanecen en el navegador hasta que la persona exporta su Memory Card.
+El contenido público es una reconstrucción pedagógica breve y trazable. Los materiales originales no se copian en el sitio: permanecen en Drive y se enlazan con su rango de páginas en el compendio. Las elaboraciones personales permanecen en el navegador hasta que la persona exporta su Memory Card.
