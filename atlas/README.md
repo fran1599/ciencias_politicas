@@ -1,4 +1,4 @@
-# Atlas personal · prototipo v0.5
+# Atlas personal · prototipo v0.6
 
 Prototipo estático, aislado del sitio principal, para convertir el programa de Economía Política I en un recorrido de estudio navegable y conservar localmente la memoria académica personal.
 
@@ -14,11 +14,13 @@ Prototipo estático, aislado del sitio principal, para convertir el programa de 
 - onboarding breve de primera entrada, reabrible desde la ayuda global;
 - portada orientada por herramientas: materia, glosario, actividades y biblioteca;
 - ayuda contextual unificada bajo el símbolo `?`, tanto global como en los accesos del inicio;
+- microayudas visibles al pasar o enfocar el símbolo `?` en dispositivos con puntero; en pantallas táctiles, la explicación se abre al tocarlo;
 - navegación progresiva: primero se elige un bloque, una unidad o una operación y después se despliega el contenido;
 - unidad en cursada abierta por defecto y resto del programa plegado;
 - conceptos agrupados por unidad, actividades por capacidad y materiales por función;
 - apartados de lecturas y capas conceptuales desplegables;
 - modo oscuro persistente;
+- transiciones breves para cambios de ruta, aperturas y diálogos, con desactivación completa mediante `prefers-reduced-motion`;
 - vigilancia epistémica visible mediante capas de procedencia;
 - niveles de elaboración: Reconocer, Comprender, Relacionar, Discutir y Producir;
 - notas y progreso locales en IndexedDB, con respaldo en `localStorage` si no está disponible;
