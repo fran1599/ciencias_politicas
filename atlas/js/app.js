@@ -106,6 +106,7 @@ function currentRouteName(parts) {
 function setChrome(label, routeName, helpTopic = routeName) {
   breadcrumb.textContent = label;
   currentHelpTopic = helpTopic;
+  helpButton.dataset.tooltip = `Ayuda: ${label}`;
   document.querySelectorAll("[data-route]").forEach(link => {
     if (link.dataset.route === routeName) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
@@ -113,6 +114,12 @@ function setChrome(label, routeName, helpTopic = routeName) {
   sidebar.classList.remove("open");
   menuButton.setAttribute("aria-expanded", "false");
   window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function animatePageIn() {
+  main.classList.remove("is-entering");
+  void main.offsetWidth;
+  main.classList.add("is-entering");
 }
 
 function openHelp(topic = currentHelpTopic) {
@@ -131,7 +138,7 @@ function closeHelp() {
 }
 
 function toolCard({ href, topic, icon, title, description }) {
-  return `<article class="tool-card"><a class="tool-card-link" href="${href}"><span class="intent-icon" aria-hidden="true">${icon}</span><span><strong>${title}</strong><small>${description}</small></span><span aria-hidden="true">→</span></a><button class="mini-help" type="button" data-help-topic="${topic}" aria-label="Ayuda sobre ${title}" title="Ayuda sobre ${title}">?</button></article>`;
+  return `<article class="tool-card"><a class="tool-card-link" href="${href}"><span class="intent-icon" aria-hidden="true">${icon}</span><span><strong>${title}</strong><small>${description}</small></span><span aria-hidden="true">→</span></a><button class="mini-help" type="button" data-help-topic="${topic}" data-tooltip="Cómo se usa" aria-label="Ayuda sobre ${title}">?</button></article>`;
 }
 
 function openOnboarding() {
@@ -345,6 +352,7 @@ async function router() {
     else if (parts[0] === "actividad") await renderActivity(parts[1]);
     else if (parts[0] === "biblioteca") renderLibrary();
     else renderNotFound();
+    animatePageIn();
     document.title = `${breadcrumb.textContent} · Atlas`;
     await refreshMemoryCount();
   } catch (error) {
