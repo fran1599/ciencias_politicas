@@ -1,4 +1,4 @@
-# Atlas personal · prototipo v0.4
+# Atlas personal · prototipo v0.5
 
 Prototipo estático, aislado del sitio principal, para convertir el programa de Economía Política I en un recorrido de estudio navegable y conservar localmente la memoria académica personal.
 
@@ -12,8 +12,12 @@ Prototipo estático, aislado del sitio principal, para convertir el programa de 
 - cuatro reconstrucciones de lectura y doce conceptos relacionados;
 - siete actividades alineadas al método de estudio y al momento de la cursada;
 - onboarding breve de primera entrada, reabrible desde la ayuda global;
-- portada orientada por intenciones: ubicarse, comprender o practicar;
-- ayudas contextuales en las herramientas principales;
+- portada orientada por herramientas: materia, glosario, actividades y biblioteca;
+- ayuda contextual unificada bajo el símbolo `?`, tanto global como en los accesos del inicio;
+- navegación progresiva: primero se elige un bloque, una unidad o una operación y después se despliega el contenido;
+- unidad en cursada abierta por defecto y resto del programa plegado;
+- conceptos agrupados por unidad, actividades por capacidad y materiales por función;
+- apartados de lecturas y capas conceptuales desplegables;
 - modo oscuro persistente;
 - vigilancia epistémica visible mediante capas de procedencia;
 - niveles de elaboración: Reconocer, Comprender, Relacionar, Discutir y Producir;
@@ -48,4 +52,6 @@ El contenido público es una reconstrucción pedagógica breve y trazable. Los m
 
 La interfaz muestra sólo información necesaria para estudiar, orientarse, interpretar una etiqueta o comprender una función. Las hipótesis de evolución, decisiones arquitectónicas, estados de implementación y alternativas futuras pertenecen a la documentación del proyecto y no deben aparecer como texto explicativo dentro del Atlas.
 
-La guía inicial presenta únicamente tres decisiones de uso: elegir una tarea, reconocer la procedencia del contenido y guardar el proceso personal. No intenta recorrer todas las pantallas. Su cierre queda registrado en `localStorage` y puede reabrirse desde el botón de ayuda o desde la Memory Card.
+La guía inicial presenta únicamente tres decisiones de uso: elegir una tarea, reconocer la procedencia del contenido y guardar el proceso personal. No intenta recorrer todas las pantallas. Su cierre queda registrado en `localStorage`.
+
+El botón global `?` ofrece ayuda específica para la pantalla actual. Los accesos del inicio y la Memory Card usan el mismo símbolo para la misma acción. No se mezclan botones de ayuda con desplegables explicativos.
