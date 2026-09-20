@@ -56,6 +56,7 @@ function progressFor(records) {
 async function renderHome() {
   const records = await getAllRecords();
   const progress = progressFor(records);
+  const bibliographyCount = atlasData.subject.units.reduce((sum, unit) => sum + unit.bibliography.length, 0);
   setChrome("Mi recorrido", "home");
   main.innerHTML = `
     <section class="hero">
@@ -63,7 +64,7 @@ async function renderHome() {
       <h1>Volver a estudiar, sin volver a empezar.</h1>
       <p class="lead">El Atlas organiza el programa, las lecturas, los conceptos, las actividades y tus elaboraciones. Enseña a demanda y conserva en tu dispositivo la memoria de cómo vas comprendiendo.</p>
       <div class="hero-actions">
-        <a class="button" href="#/actividad/mapa-argumento-polanyi">Hacer una actividad</a>
+        <a class="button" href="#/actividad/tpe-unidades-1-2">Preparar el TPE</a>
         <a class="button button-ghost" href="#/materia/economia-politica-i">Ver el programa navegable</a>
       </div>
     </section>
@@ -77,38 +78,40 @@ async function renderHome() {
       </article>
       <article class="card">
         <p class="eyebrow">Próximo paso sugerido</p>
-        <h3>Reconstruir antes de opinar</h3>
-        <p class="muted">Separá problema, tesis y fundamentación en “Aristóteles descubre la economía”.</p>
-        <a class="button-text" href="#/actividad/mapa-argumento-polanyi">Abrir actividad →</a>
+        <h3>Integrar antes de la evaluación</h3>
+        <p class="muted">El cronograma ubica la semana de exámenes después de las unidades 1, 2 y el primer bloque de la 3. Practicá una tesis que haga conversar autores.</p>
+        <a class="button-text" href="#/actividad/tpe-unidades-1-2">Abrir ensayo de TPE →</a>
       </article>
     </section>
 
     <div class="section-heading"><div><p class="eyebrow">Mapa ampliado</p><h2>Navegá por relaciones, no por carpetas</h2></div></div>
     <div class="path-list">
-      <a class="path-item" href="#/materia/economia-politica-i"><span class="path-index">02</span><span><strong>Dos unidades y doce lecturas</strong><small>Programa navegable · cuatro reconstrucciones disponibles</small></span><span class="path-arrow">→</span></a>
-      <a class="path-item" href="#/glosario"><span class="path-index">09</span><span><strong>Glosario relacional</strong><small>Conceptos con autoría, reconstrucción y lectura crítica</small></span><span class="path-arrow">→</span></a>
-      <a class="path-item" href="#/actividades"><span class="path-index">05</span><span><strong>Actividades académicas</strong><small>Comprender, relacionar, discutir y producir</small></span><span class="path-arrow">→</span></a>
+      <a class="path-item" href="#/materia/economia-politica-i"><span class="path-index">05</span><span><strong>Cinco unidades y ${bibliographyCount} entradas básicas</strong><small>Programa completo · cuatro reconstrucciones navegables · rangos del compendio</small></span><span class="path-arrow">→</span></a>
+      <a class="path-item" href="#/glosario"><span class="path-index">${String(Object.keys(atlasData.concepts).length).padStart(2, "0")}</span><span><strong>Glosario relacional</strong><small>Conceptos con autoría, reconstrucción y lectura crítica</small></span><span class="path-arrow">→</span></a>
+      <a class="path-item" href="#/actividades"><span class="path-index">${String(atlasData.activities.length).padStart(2, "0")}</span><span><strong>Actividades académicas</strong><small>Comprender, relacionar, discutir y producir</small></span><span class="path-arrow">→</span></a>
       <a class="path-item" href="#/biblioteca"><span class="path-index">B</span><span><strong>Biblioteca y fuentes</strong><small>Enlaces verificados y vacíos documentales visibles</small></span><span class="path-arrow">→</span></a>
     </div>`;
 }
 
 function renderSubject() {
   const subject = atlasData.subject;
+  const bibliographyCount = subject.units.reduce((sum, unit) => sum + unit.bibliography.length, 0);
   setChrome(`Materias / ${subject.name}`, "subject");
   const units = subject.units.map(unit => `
     <section class="unit-block">
-      <div class="section-heading"><div><p class="eyebrow">Unidad ${unit.number}</p><h2>${unit.title}</h2><p class="muted">${unit.question}</p></div><div class="catalog-actions"><a class="button button-small button-ghost" href="${unit.guideUrl}" target="_blank" rel="noreferrer">Guía ↗</a><a class="button button-small button-ghost" href="${unit.summaryUrl}" target="_blank" rel="noreferrer">Resumen ↗</a></div></div>
+      <div class="section-heading"><div><div class="meta-line"><p class="eyebrow">Unidad ${unit.number}</p><span class="tag status-${unit.statusKind}">${unit.status}</span></div><h2>${unit.title}</h2><p class="muted">${unit.question}</p></div><div class="catalog-actions"><a class="button button-small button-ghost" href="${unit.guideUrl}" target="_blank" rel="noreferrer">Guía ↗</a>${unit.summaryUrl ? `<a class="button button-small button-ghost" href="${unit.summaryUrl}" target="_blank" rel="noreferrer">Resumen ↗</a>` : ""}</div></div>
       <div class="catalog-list">
         ${unit.bibliography.map(item => `
           <article class="catalog-item">
-            <div><h3>${item.author} · ${item.title}</h3><p class="muted">${item.available ? "Reconstrucción navegable disponible." : "Registrado en la guía; desarrollo interno pendiente."}</p></div>
-            <div class="catalog-actions">${item.available ? `<a class="button button-small" href="#/lectura/${item.id}">Abrir en Atlas</a>` : `<span class="tag">En preparación</span>`}<a class="button button-small button-ghost" href="${unit.guideUrl}" target="_blank" rel="noreferrer">Ver guía ↗</a></div>
+            <div><h3>${item.author} · ${item.title}</h3><p class="muted">${item.reference} · ${item.pages}. ${item.available ? "Reconstrucción navegable disponible." : "Texto localizado; reconstrucción interna pendiente."}</p></div>
+            <div class="catalog-actions">${item.available ? `<a class="button button-small" href="#/lectura/${item.id}">Abrir en Atlas</a>` : `<span class="tag">Mapeado</span>`}<a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Abrir compendio ↗</a></div>
           </article>`).join("")}
       </div>
     </section>`).join("");
   main.innerHTML = `
     <section class="hero"><p class="eyebrow">${subject.institution} · ${subject.year}</p><h1>${subject.name}</h1><p class="lead">${subject.description}</p></section>
-    <section class="card full"><div class="card-topline"><div><p class="eyebrow">Pregunta general</p><h2>${subject.question}</h2></div><span class="tag">${subject.pilotStatus}</span></div><p class="muted">Las doce lecturas fueron verificadas en las guías vigentes. Cuatro ya tienen reconstrucción interna; las demás permanecen visibles para no confundir cobertura del programa con contenido efectivamente desarrollado.</p></section>
+    <section class="card full"><div class="card-topline"><div><p class="eyebrow">Pregunta general</p><h2>${subject.question}</h2></div><span class="tag">${subject.pilotStatus}</span></div><p class="muted">Las ${bibliographyCount} entradas básicas fueron contrastadas con el Programa 2026 y ubicadas dentro del compendio de 520 páginas. Cuatro ya tienen reconstrucción interna; el resto queda visible como mapa, no como contenido elaborado.</p><div class="hero-actions"><a class="button button-small" href="${subject.programUrl}" target="_blank" rel="noreferrer">Programa oficial ↗</a><a class="button button-small button-ghost" href="${subject.scheduleUrl}" target="_blank" rel="noreferrer">Cronograma ↗</a><a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Compendio ↗</a></div></section>
+    <div class="callout"><p class="eyebrow">Corte temporal · 20/09/2026</p><p>Según el cronograma, las unidades 1 y 2 ya fueron trabajadas, la unidad 3.1 está en curso y del 21 al 25 de septiembre corresponde la semana de exámenes. El bloque marginalista está previsto desde el 29 de septiembre. Las fechas de evaluación siguen siendo provisorias.</p></div>
     ${units}`;
 }
 
@@ -130,7 +133,7 @@ function renderLibrary() {
   setChrome("Biblioteca", "library");
   const cards = atlasData.materials.map(material => `
     <article class="resource-card ${material.url ? "" : "pending"}"><div class="meta-line"><span class="tag source">${material.kind}</span><span class="tag">${material.status}</span></div><h3>${material.title}</h3><p class="muted">${material.description}</p>${material.url ? `<a class="button-text" href="${material.url}" target="_blank" rel="noreferrer">Abrir material ↗</a>` : `<span class="muted">Sin enlace verificable</span>`}</article>`).join("");
-  main.innerHTML = `<section class="hero"><p class="eyebrow">Acceso y trazabilidad</p><h1>Biblioteca académica</h1><p class="lead">Reúne los materiales que pudimos verificar. Los textos originales no se reproducen en el sitio: se enlazan cuando existe una ubicación autorizada y accesible.</p></section><div class="callout"><p class="eyebrow">Estado documental</p><p>Las guías y resúmenes declaran haber sido construidos con el Programa 2026, el cronograma y el compendio vigentes. El archivo original del programa no está disponible desde el Drive conectado; por eso aparece como pendiente y no como fuente enlazada.</p></div><div class="resource-grid">${cards}</div>`;
+  main.innerHTML = `<section class="hero"><p class="eyebrow">Acceso y trazabilidad</p><h1>Biblioteca académica</h1><p class="lead">Reúne los materiales verificados de la materia y los documentos de elaboración del proyecto. Los textos originales no se copian en el sitio: se enlazan a la carpeta compartida.</p></section><div class="callout"><p class="eyebrow">Criterio documental y de derechos</p><p>Programa, cronograma, guía y compendio fueron verificados directamente. El Atlas publica referencias, rangos de páginas y reconstrucciones propias; no redistribuye los PDF ni presenta el resumen como sustituto de las obras. El acceso a cada archivo depende de los permisos definidos por quienes administran el Drive.</p></div><div class="resource-grid">${cards}</div>`;
 }
 
 function levelPicker(record) {
@@ -188,7 +191,7 @@ async function renderConcept(id) {
   if (!concept) return renderNotFound();
   const record = (await getRecord(`concept:${id}`)) || { id: `concept:${id}`, type: "concept", note: "", level: 0 };
   setChrome(`Glosario / ${concept.name}`, "glossary");
-  const readings = concept.readings.map(readingId => `<a class="relation" href="#/lectura/${readingId}">${atlasData.readings[readingId].author} · ${atlasData.readings[readingId].title}</a>`).join("");
+  const readings = concept.readings.map(readingId => `<a class="relation" href="#/lectura/${readingId}">${atlasData.readings[readingId].author} · ${atlasData.readings[readingId].title}</a>`).join("") || `<span class="muted">La lectura está localizada en el compendio; su reconstrucción navegable está pendiente.</span>`;
   main.innerHTML = `
     <section class="hero"><div class="meta-line"><span class="tag reconstruction">Concepto en construcción</span><span class="tag source">Corpus verificado</span></div><h1>${concept.name}</h1><p class="lead">${concept.short}</p></section>
     <section aria-labelledby="layers-title"><p class="eyebrow">Definición estratificada</p><h2 id="layers-title">No mezclar las capas</h2><div class="epistemic-stack"><div class="epistemic-row"><strong>Programa / cátedra</strong><span>${concept.programLayer}</span></div><div class="epistemic-row"><strong>Autor / texto</strong><span>${concept.authorLayer}</span></div><div class="epistemic-row"><strong>Reconstrucción</strong><span>${concept.reconstructionLayer}</span></div><div class="epistemic-row"><strong>Lectura crítica</strong><span>${concept.criticalLayer}</span></div></div></section>
