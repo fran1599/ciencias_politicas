@@ -311,8 +311,8 @@ p { margin-top: 0; }
     transform: translateY(-3px);
     transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-out);
   }
-  [data-tooltip]:hover::after,
-  [data-tooltip]:focus-visible::after { opacity: 1; transform: translateY(0); }
+  [data-tooltip]:not(.tooltip-dismissed):hover::after,
+  [data-tooltip]:not(.tooltip-dismissed):focus-visible::after { opacity: 1; transform: translateY(0); }
 }
 
 :root[data-theme="dark"] .sidebar { background: #0b2a22; }
