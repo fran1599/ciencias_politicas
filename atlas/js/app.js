@@ -13,8 +13,72 @@ const onboardingDialog = document.querySelector("#onboarding-dialog");
 const onboardingClose = document.querySelector("#onboarding-close");
 const onboardingStart = document.querySelector("#onboarding-start");
 const onboardingDismiss = document.querySelector("#onboarding-dismiss");
+const helpDialog = document.querySelector("#help-dialog");
+const helpDialogClose = document.querySelector("#help-dialog-close");
+const helpDialogEyebrow = document.querySelector("#help-dialog-eyebrow");
+const helpDialogTitle = document.querySelector("#help-dialog-title");
+const helpDialogIntro = document.querySelector("#help-dialog-intro");
+const helpDialogSteps = document.querySelector("#help-dialog-steps");
 const ONBOARDING_KEY = "atlas-onboarding-seen-v1";
 let toastTimer;
+let currentHelpTopic = "home";
+
+const HELP_CONTENT = {
+  home: {
+    eyebrow: "Inicio",
+    title: "Elegí una herramienta según lo que necesitás hacer",
+    intro: "No hace falta recorrer el Atlas completo. Cada acceso abre un camino distinto de estudio.",
+    steps: ["Materia: ubicarte en la cursada y elegir una unidad.", "Glosario: aclarar un concepto y recorrer sus relaciones.", "Actividades: practicar una operación concreta.", "Biblioteca: volver a programas, textos, guías y fuentes."]
+  },
+  subject: {
+    eyebrow: "Materia",
+    title: "Primero elegí una unidad; después, una lectura",
+    intro: "Las unidades están plegadas para que el programa no aparezca entero de una vez. La unidad en cursada se abre primero.",
+    steps: ["Abrí la unidad que quieras estudiar.", "Elegí “Estudiar en el Atlas” cuando haya una ficha navegable.", "Usá “Abrir texto” para volver a la fuente original."]
+  },
+  glossary: {
+    eyebrow: "Glosario",
+    title: "Buscá por bloque y abrí sólo el concepto necesario",
+    intro: "Los conceptos están agrupados por su ubicación curricular. La definición completa aparece recién al entrar.",
+    steps: ["Elegí una unidad o bloque.", "Abrí el concepto que te esté trabando.", "Compará programa, autor, reconstrucción y crítica sin confundir sus procedencias."]
+  },
+  activities: {
+    eyebrow: "Actividades",
+    title: "Elegí qué operación querés practicar",
+    intro: "Las actividades se agrupan por capacidad, no por puntos ni consumo de pantallas.",
+    steps: ["Comprender reconstruye un argumento.", "Relacionar conecta conceptos o autores.", "Discutir formula objeciones; Producir transforma lo estudiado en una elaboración."]
+  },
+  library: {
+    eyebrow: "Biblioteca",
+    title: "Volvé a la fuente que necesitás",
+    intro: "Los materiales están separados por función para evitar una lista única y extensa.",
+    steps: ["Fuentes de la cátedra: programa, cronograma, compendio y guía.", "Guías y resúmenes: apoyos para estudiar.", "Carpetas y método: organización documental del recorrido."]
+  },
+  reading: {
+    eyebrow: "Lectura",
+    title: "Reconstruí el argumento antes de evaluarlo",
+    intro: "La pregunta y la tesis orientan. El desarrollo se abre por apartados para leerlo a tu ritmo.",
+    steps: ["Leé la pregunta central.", "Contrastá la tesis reconstruida con el texto original.", "Abrí los apartados, conceptos o actividades sólo cuando los necesites."]
+  },
+  concept: {
+    eyebrow: "Concepto",
+    title: "Una palabra puede cambiar según su procedencia",
+    intro: "La orientación breve no funciona como definición definitiva.",
+    steps: ["Partí de la explicación inicial.", "Abrí cada capa para distinguir programa, autor, reconstrucción y crítica.", "Volvé a los textos relacionados antes de atribuir una tesis."]
+  },
+  activity: {
+    eyebrow: "Actividad",
+    title: "Dejá evidencia de una operación concreta",
+    intro: "No busques una respuesta perfecta: explicá, relacioná, objetá o producí con lo que comprendiste.",
+    steps: ["Leé el propósito y la consigna.", "Desarrollá la respuesta en el espacio privado.", "Marcá un nivel sólo como autoevaluación, no como nota."]
+  },
+  memory: {
+    eyebrow: "Memory Card",
+    title: "Tu proceso queda en este dispositivo",
+    intro: "Notas, respuestas y niveles no se publican en el Atlas.",
+    steps: ["Exportar descarga un archivo JSON de respaldo.", "Importar recupera ese archivo en otro navegador o dispositivo.", "Ningún dato se publica automáticamente."]
+  }
+};
 
 const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, char => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
@@ -39,8 +103,9 @@ function currentRouteName(parts) {
   return "subject";
 }
 
-function setChrome(label, routeName) {
+function setChrome(label, routeName, helpTopic = routeName) {
   breadcrumb.textContent = label;
+  currentHelpTopic = helpTopic;
   document.querySelectorAll("[data-route]").forEach(link => {
     if (link.dataset.route === routeName) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
@@ -50,8 +115,23 @@ function setChrome(label, routeName) {
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-function contextHelp(title, text) {
-  return `<details class="context-help"><summary>¿Cómo uso esta parte?</summary><div><strong>${title}</strong><p>${text}</p></div></details>`;
+function openHelp(topic = currentHelpTopic) {
+  const content = HELP_CONTENT[topic] || HELP_CONTENT.home;
+  helpDialogEyebrow.textContent = content.eyebrow;
+  helpDialogTitle.textContent = content.title;
+  helpDialogIntro.textContent = content.intro;
+  helpDialogSteps.innerHTML = content.steps.map(step => `<li>${step}</li>`).join("");
+  if (typeof helpDialog.showModal === "function") helpDialog.showModal();
+  else helpDialog.setAttribute("open", "");
+}
+
+function closeHelp() {
+  if (typeof helpDialog.close === "function") helpDialog.close();
+  else helpDialog.removeAttribute("open");
+}
+
+function toolCard({ href, topic, icon, title, description }) {
+  return `<article class="tool-card"><a class="tool-card-link" href="${href}"><span class="intent-icon" aria-hidden="true">${icon}</span><span><strong>${title}</strong><small>${description}</small></span><span aria-hidden="true">→</span></a><button class="mini-help" type="button" data-help-topic="${topic}" aria-label="Ayuda sobre ${title}" title="Ayuda sobre ${title}">?</button></article>`;
 }
 
 function openOnboarding() {
@@ -67,51 +147,41 @@ function closeOnboarding() {
 
 async function renderHome() {
   const records = await getAllRecords();
-  const bibliographyCount = atlasData.subject.units.reduce((sum, unit) => sum + unit.bibliography.length, 0);
   const workedRecords = records.filter(record => record.level > 0).length;
   setChrome("Mi recorrido", "home");
   main.innerHTML = `
     <section class="hero home-hero">
       <p class="eyebrow">Atlas personal de Ciencia Política</p>
       <h1>¿Qué necesitás estudiar hoy?</h1>
-      <p class="lead">Entrá por una materia, un concepto o una actividad. El Atlas te orienta, enlaza las fuentes y guarda en este dispositivo tus notas y avances.</p>
+      <p class="lead">Elegí una herramienta. El contenido completo aparece recién cuando lo necesitás.</p>
       <div class="hero-actions">
         <a class="button" href="#/materia/economia-politica-i">Continuar Economía Política I</a>
-        <button class="button button-ghost" type="button" data-open-guide>Cómo usar el Atlas</button>
+        <button class="button button-ghost" type="button" data-open-guide><span aria-hidden="true">?</span> Guía inicial</button>
       </div>
     </section>
 
     <section aria-labelledby="start-title">
-      <div class="section-heading compact"><div><p class="eyebrow">Tres formas de empezar</p><h2 id="start-title">Elegí según lo que necesites</h2></div></div>
-      <div class="intent-grid">
-        <a class="intent-card primary" href="#/materia/economia-politica-i"><span class="intent-icon" aria-hidden="true">1</span><span><strong>Ubicarme en la cursada</strong><small>Ver unidades, lecturas y qué corresponde estudiar ahora.</small></span><span aria-hidden="true">→</span></a>
-        <a class="intent-card" href="#/glosario"><span class="intent-icon" aria-hidden="true">2</span><span><strong>Entender un concepto</strong><small>Partir de una explicación breve y recorrer sus relaciones.</small></span><span aria-hidden="true">→</span></a>
-        <a class="intent-card" href="#/actividades"><span class="intent-icon" aria-hidden="true">3</span><span><strong>Practicar lo aprendido</strong><small>Responder, comparar o producir con guardado privado.</small></span><span aria-hidden="true">→</span></a>
+      <div class="section-heading compact"><div><p class="eyebrow">Herramientas</p><h2 id="start-title">Entrá por la acción</h2></div></div>
+      <div class="tool-grid">
+        ${toolCard({ href: "#/materia/economia-politica-i", topic: "subject", icon: "1", title: "Seguir la materia", description: "Elegir unidad y lectura." })}
+        ${toolCard({ href: "#/glosario", topic: "glossary", icon: "2", title: "Buscar un concepto", description: "Aclarar y relacionar." })}
+        ${toolCard({ href: "#/actividades", topic: "activities", icon: "3", title: "Practicar", description: "Comprender, discutir o producir." })}
+        ${toolCard({ href: "#/biblioteca", topic: "library", icon: "4", title: "Abrir fuentes", description: "Volver a textos y materiales." })}
       </div>
     </section>
 
-    <section class="card-grid" aria-label="Estado del recorrido">
-      <article class="card wide">
-        <div class="card-topline"><div><p class="eyebrow">Recorrido activo</p><h2>${atlasData.subject.name}</h2></div><span class="tag source">Corpus ${atlasData.subject.year}</span></div>
-        <p>${atlasData.subject.question}</p>
-        <div class="metric-row"><div><strong>${workedRecords}</strong><span>contenidos con nivel marcado</span></div><div><strong>${atlasData.subject.units.length}</strong><span>unidades del programa</span></div><div><strong>${records.length}</strong><span>registros privados</span></div></div>
-        <p class="metric-note">Los niveles son una autoevaluación para decidir el próximo paso, no una nota ni una medida definitiva de aprendizaje.</p>
-      </article>
-      <article class="card">
-        <p class="eyebrow">Próximo paso sugerido</p>
-        <h3>Integrar antes de la evaluación</h3>
-        <p class="muted">El cronograma ubica la semana de exámenes después de las unidades 1, 2 y el primer bloque de la 3. Practicá una tesis que haga conversar autores.</p>
-        <a class="button-text" href="#/actividad/tpe-unidades-1-2">Abrir ensayo de TPE →</a>
-      </article>
-    </section>
-
-    <details class="more-navigation">
-      <summary>Ver todas las herramientas y fuentes</summary>
-      <div class="path-list">
-        <a class="path-item" href="#/materia/economia-politica-i"><span class="path-index">05</span><span><strong>${bibliographyCount} lecturas en cinco unidades</strong><small>Programa, recorrido de cursada y acceso al compendio</small></span><span class="path-arrow">→</span></a>
-        <a class="path-item" href="#/glosario"><span class="path-index">${String(Object.keys(atlasData.concepts).length).padStart(2, "0")}</span><span><strong>Glosario relacional</strong><small>Conceptos con procedencia y discusión crítica</small></span><span class="path-arrow">→</span></a>
-        <a class="path-item" href="#/actividades"><span class="path-index">${String(atlasData.activities.length).padStart(2, "0")}</span><span><strong>Actividades académicas</strong><small>Comprender, relacionar, discutir y producir</small></span><span class="path-arrow">→</span></a>
-        <a class="path-item" href="#/biblioteca"><span class="path-index">B</span><span><strong>Biblioteca y fuentes</strong><small>Programa, cronograma, guías y materiales enlazados</small></span><span class="path-arrow">→</span></a>
+    <details class="progressive-section home-status">
+      <summary><span><strong>Mi recorrido</strong><small>Estado, próximo paso y memoria local</small></span><span aria-hidden="true">⌄</span></summary>
+      <div class="progressive-content card-grid" aria-label="Estado del recorrido">
+        <article class="card wide">
+          <div class="card-topline"><div><p class="eyebrow">Materia activa</p><h2>${atlasData.subject.name}</h2></div><span class="tag source">${atlasData.subject.year}</span></div>
+          <div class="metric-row"><div><strong>${workedRecords}</strong><span>contenidos trabajados</span></div><div><strong>${records.length}</strong><span>registros privados</span></div></div>
+          <p class="metric-note">Los niveles orientan el próximo paso; no son una nota.</p>
+        </article>
+        <article class="card">
+          <p class="eyebrow">Próximo paso</p><h3>Integrar lo estudiado</h3>
+          <a class="button-text" href="#/actividad/tpe-unidades-1-2">Abrir ensayo de integración →</a>
+        </article>
       </div>
     </details>`;
 }
@@ -121,43 +191,63 @@ function renderSubject() {
   const bibliographyCount = subject.units.reduce((sum, unit) => sum + unit.bibliography.length, 0);
   setChrome(`Materias / ${subject.name}`, "subject");
   const units = subject.units.map(unit => `
-    <section class="unit-block">
-      <div class="section-heading"><div><div class="meta-line"><p class="eyebrow">Unidad ${unit.number}</p><span class="tag status-${unit.statusKind}">${unit.status}</span></div><h2>${unit.title}</h2><p class="muted">${unit.question}</p></div><div class="catalog-actions"><a class="button button-small button-ghost" href="${unit.guideUrl}" target="_blank" rel="noreferrer">Guía ↗</a>${unit.summaryUrl ? `<a class="button button-small button-ghost" href="${unit.summaryUrl}" target="_blank" rel="noreferrer">Resumen ↗</a>` : ""}</div></div>
-      <div class="catalog-list">
+    <details class="progressive-section unit-block" ${unit.statusKind === "current" ? "open" : ""}>
+      <summary><span class="unit-summary"><span class="unit-number">${unit.number}</span><span><strong>${unit.title}</strong><small>${unit.bibliography.length} lecturas</small></span></span><span class="tag status-${unit.statusKind}">${unit.status}</span><span aria-hidden="true">⌄</span></summary>
+      <div class="progressive-content">
+        <p class="unit-question">${unit.question}</p>
+        <div class="catalog-actions unit-actions"><a class="button button-small button-ghost" href="${unit.guideUrl}" target="_blank" rel="noreferrer">Guía ↗</a>${unit.summaryUrl ? `<a class="button button-small button-ghost" href="${unit.summaryUrl}" target="_blank" rel="noreferrer">Resumen ↗</a>` : ""}</div>
+        <div class="catalog-list">
         ${unit.bibliography.map(item => `
           <article class="catalog-item">
-            <div><h3>${item.author} · ${item.title}</h3><p class="muted">${item.reference} · ${item.pages}. ${item.available ? "Incluye una guía navegable dentro del Atlas." : "Disponible para leer en el compendio."}</p></div>
-            <div class="catalog-actions">${item.available ? `<a class="button button-small" href="#/lectura/${item.id}">Estudiar en el Atlas</a>` : `<span class="tag">En el compendio</span>`}<a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Abrir texto ↗</a></div>
+            <div><p class="catalog-author">${item.author}</p><h3>${item.title}</h3><p class="muted">${item.reference} · ${item.pages}</p></div>
+            <div class="catalog-actions">${item.available ? `<a class="button button-small" href="#/lectura/${item.id}">Estudiar</a>` : `<span class="tag">En el compendio</span>`}<a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Abrir texto ↗</a></div>
           </article>`).join("")}
+        </div>
       </div>
-    </section>`).join("");
+    </details>`).join("");
   main.innerHTML = `
-    <section class="hero"><p class="eyebrow">${subject.institution} · ${subject.year}</p><h1>${subject.name}</h1><p class="lead">${subject.description}</p></section>
-    ${contextHelp("Empezá por la unidad que dice “En cursada”", "Cada lectura indica dónde está en el compendio. Cuando aparece “Estudiar en el Atlas”, además tenés una explicación, conceptos relacionados y un espacio privado para elaborar lo leído.")}
-    <section class="card full"><div class="card-topline"><div><p class="eyebrow">Pregunta general</p><h2>${subject.question}</h2></div><span class="tag">${subject.pilotStatus}</span></div><p class="muted">Las ${bibliographyCount} lecturas básicas fueron contrastadas con el Programa 2026 y ubicadas dentro del compendio de 520 páginas. Usá las etiquetas para distinguir qué podés estudiar dentro del Atlas y qué se abre directamente en la fuente.</p><div class="hero-actions"><a class="button button-small" href="${subject.programUrl}" target="_blank" rel="noreferrer">Programa oficial ↗</a><a class="button button-small button-ghost" href="${subject.scheduleUrl}" target="_blank" rel="noreferrer">Cronograma ↗</a><a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Compendio ↗</a></div></section>
-    <div class="callout"><p class="eyebrow">Corte temporal · 20/09/2026</p><p>Según el cronograma, las unidades 1 y 2 ya fueron trabajadas, la unidad 3.1 está en curso y del 21 al 25 de septiembre corresponde la semana de exámenes. El bloque marginalista está previsto desde el 29 de septiembre. Las fechas de evaluación siguen siendo provisorias.</p></div>
+    <section class="hero compact-hero"><p class="eyebrow">${subject.institution} · ${subject.year}</p><h1>${subject.name}</h1><p class="lead">Elegí una unidad para ver sus lecturas. La unidad en cursada está abierta.</p></section>
+    <div class="current-focus"><span class="tag status-current">Ahora</span><span><strong>Unidad 3 · Los fundamentos del valor</strong><small>Semana de exámenes del 21 al 25 de septiembre; las fechas son provisorias.</small></span></div>
+    <details class="progressive-section subject-about">
+      <summary><span><strong>Sobre la materia y sus fuentes</strong><small>${bibliographyCount} lecturas básicas contrastadas con el Programa 2026</small></span><span aria-hidden="true">⌄</span></summary>
+      <div class="progressive-content"><p>${subject.question}</p><p class="muted">${subject.description}</p><div class="hero-actions"><a class="button button-small" href="${subject.programUrl}" target="_blank" rel="noreferrer">Programa ↗</a><a class="button button-small button-ghost" href="${subject.scheduleUrl}" target="_blank" rel="noreferrer">Cronograma ↗</a><a class="button button-small button-ghost" href="${subject.compendiumUrl}" target="_blank" rel="noreferrer">Compendio ↗</a></div></div>
+    </details>
+    <div class="section-heading compact"><div><p class="eyebrow">Recorrido</p><h2>Unidades</h2></div></div>
     ${units}`;
 }
 
 function renderGlossary() {
   setChrome("Glosario relacional", "glossary");
-  const cards = Object.values(atlasData.concepts).map(concept => `
-    <a class="concept-card" href="#/concepto/${concept.id}"><span class="tag reconstruction">Reconstrucción pedagógica</span><h3>${concept.name}</h3><p class="muted">${concept.short}</p><span class="button-text">Abrir relaciones →</span></a>`).join("");
-  main.innerHTML = `<section class="hero"><p class="eyebrow">Conceptos en contexto</p><h1>Glosario relacional</h1><p class="lead">Cada término conserva quién lo formula, en qué problema interviene, cómo lo reconstruimos y qué discusión abre. No hay definiciones sin procedencia.</p></section>${contextHelp("Entrá por el concepto que te esté trabando", "Primero vas a encontrar una orientación breve. Después podés distinguir lo que plantea el programa, lo atribuible al autor, la reconstrucción pedagógica y la lectura crítica.")}<div class="glossary-grid">${cards}</div>`;
+  const groups = ["Unidad 1", "Unidad 2", "Unidad 3"];
+  const groupedConcepts = groups.map(group => {
+    const concepts = Object.values(atlasData.concepts).filter(concept => concept.programLayer.startsWith(group));
+    return `<details class="progressive-section concept-group" ${group === "Unidad 3" ? "open" : ""}><summary><span><strong>${group}</strong><small>${concepts.length} conceptos</small></span><span aria-hidden="true">⌄</span></summary><div class="progressive-content compact-link-list">${concepts.map(concept => `<a href="#/concepto/${concept.id}"><strong>${concept.name}</strong><span aria-hidden="true">→</span></a>`).join("")}</div></details>`;
+  }).join("");
+  main.innerHTML = `<section class="hero compact-hero"><p class="eyebrow">Conceptos en contexto</p><h1>Glosario relacional</h1><p class="lead">Elegí el bloque y después el concepto. Las definiciones completas conservan su procedencia.</p></section>${groupedConcepts}`;
 }
 
 function renderActivities() {
   setChrome("Actividades", "activities");
-  const cards = atlasData.activities.map(activity => `
-    <article class="activity-card"><div class="meta-line"><span class="tag question">${activity.operation}</span><span class="tag">${activity.duration}</span></div><h3>${activity.title}</h3><p class="muted">${activity.goal}</p><a class="button-text" href="#/actividad/${activity.id}">Empezar →</a></article>`).join("");
-  main.innerHTML = `<section class="hero"><p class="eyebrow">Aprender haciendo</p><h1>Actividades con propósito</h1><p class="lead">No suman puntos por tocar botones. Cada una ejercita una operación del método: reconstruir, relacionar, discutir o producir.</p></section>${contextHelp("Usalas para comprobar qué podés hacer con lo estudiado", "Elegí por operación y tiempo disponible. Tu respuesta y el nivel que marques se guardan sólo en este dispositivo dentro de la Memory Card.")}<div class="activity-grid">${cards}</div>`;
+  const operations = ["Comprender", "Relacionar", "Discutir", "Producir"];
+  const groups = operations.map(operation => {
+    const activities = atlasData.activities.filter(activity => activity.operation === operation);
+    return `<details class="progressive-section activity-group"><summary><span><strong>${operation}</strong><small>${activities.length} ${activities.length === 1 ? "actividad" : "actividades"}</small></span><span aria-hidden="true">⌄</span></summary><div class="progressive-content activity-grid">${activities.map(activity => `<article class="activity-card"><div class="meta-line"><span class="tag">${activity.duration}</span></div><h3>${activity.title}</h3><p class="muted">${activity.goal}</p><a class="button-text" href="#/actividad/${activity.id}">Empezar →</a></article>`).join("")}</div></details>`;
+  }).join("");
+  main.innerHTML = `<section class="hero compact-hero"><p class="eyebrow">Aprender haciendo</p><h1>¿Qué querés practicar?</h1><p class="lead">Elegí una capacidad. Tu respuesta se guarda sólo en este dispositivo.</p></section>${groups}`;
 }
 
 function renderLibrary() {
   setChrome("Biblioteca", "library");
-  const cards = atlasData.materials.map(material => `
-    <article class="resource-card ${material.url ? "" : "pending"}"><div class="meta-line"><span class="tag source">${material.kind}</span><span class="tag">${material.status}</span></div><h3>${material.title}</h3><p class="muted">${material.description}</p>${material.url ? `<a class="button-text" href="${material.url}" target="_blank" rel="noreferrer">Abrir material ↗</a>` : `<span class="muted">Sin enlace verificable</span>`}</article>`).join("");
-  main.innerHTML = `<section class="hero"><p class="eyebrow">Acceso y trazabilidad</p><h1>Biblioteca académica</h1><p class="lead">Reúne los materiales verificados de la materia y los documentos de elaboración del proyecto. Los textos originales no se copian en el sitio: se enlazan a la carpeta compartida.</p></section>${contextHelp("Vení acá cuando necesites volver a la fuente", "El programa ordena la materia, el cronograma ubica los tiempos, la guía propone preguntas y el compendio reúne las lecturas. Los resúmenes sirven como apoyo, no como reemplazo.")}<div class="callout"><p class="eyebrow">Criterio documental y de derechos</p><p>Programa, cronograma, guía y compendio fueron verificados directamente. El Atlas publica referencias, rangos de páginas y reconstrucciones propias; no redistribuye los PDF ni presenta el resumen como sustituto de las obras. El acceso a cada archivo depende de los permisos definidos por quienes administran el Drive.</p></div><div class="resource-grid">${cards}</div>`;
+  const collections = [
+    { title: "Fuentes de la cátedra", kinds: ["Programa", "Cronograma", "Corpus", "Método"] },
+    { title: "Guías, resúmenes y apoyos", kinds: ["Unidad 1", "Unidad 2", "Síntesis", "Apoyo"] },
+    { title: "Carpetas y gobernanza", kinds: ["Gobernanza", "Carpeta"] }
+  ];
+  const groups = collections.map((collection, index) => {
+    const materials = atlasData.materials.filter(material => collection.kinds.includes(material.kind));
+    return `<details class="progressive-section resource-group" ${index === 0 ? "open" : ""}><summary><span><strong>${collection.title}</strong><small>${materials.length} materiales</small></span><span aria-hidden="true">⌄</span></summary><div class="progressive-content resource-grid">${materials.map(material => `<article class="resource-card ${material.url ? "" : "pending"}"><div class="meta-line"><span class="tag source">${material.kind}</span><span class="tag">${material.status}</span></div><h3>${material.title}</h3><p class="muted">${material.description}</p>${material.url ? `<a class="button-text" href="${material.url}" target="_blank" rel="noreferrer">Abrir material ↗</a>` : `<span class="muted">Sin enlace verificable</span>`}</article>`).join("")}</div></details>`;
+  }).join("");
+  main.innerHTML = `<section class="hero compact-hero"><p class="eyebrow">Acceso y trazabilidad</p><h1>Biblioteca académica</h1><p class="lead">Elegí primero el tipo de material. Los originales permanecen enlazados en Drive.</p></section>${groups}<details class="rights-note"><summary>Criterio documental y de derechos</summary><p>El Atlas publica referencias, rangos de páginas y reconstrucciones propias. No redistribuye los PDF ni presenta los resúmenes como sustitutos de las obras.</p></details>`;
 }
 
 function levelPicker(record) {
@@ -195,14 +285,13 @@ async function renderReading(id) {
   const reading = atlasData.readings[id];
   if (!reading) return renderNotFound();
   const record = (await getRecord(`reading:${id}`)) || { id: `reading:${id}`, type: "reading", note: "", level: 0 };
-  setChrome(`${atlasData.subject.name} / ${reading.author}`, "subject");
-  const sections = reading.sections.map(section => `<section><h2>${section.title}</h2>${section.paragraphs.map(text => `<p>${text}</p>`).join("")}</section>`).join("");
+  setChrome(`${atlasData.subject.name} / ${reading.author}`, "subject", "reading");
+  const sections = reading.sections.map((section, index) => `<details class="reading-section" ${index === 0 ? "open" : ""}><summary><strong>${section.title}</strong><span aria-hidden="true">⌄</span></summary><div>${section.paragraphs.map(text => `<p>${text}</p>`).join("")}</div></details>`).join("");
   const concepts = reading.relatedConcepts.map(conceptId => `<a class="relation" href="#/concepto/${conceptId}">${atlasData.concepts[conceptId].name}</a>`).join("");
   const activities = reading.relatedActivities.map(activityId => { const activity = atlasData.activities.find(item => item.id === activityId); return `<a class="relation" href="#/actividad/${activityId}">${activity.title}</a>`; }).join("");
   const sources = reading.sourceLinks.map(source => `<li><a href="${source.url}" target="_blank" rel="noreferrer">${source.label} ↗</a></li>`).join("");
   main.innerHTML = `
     <div class="reading-layout"><article class="reading-body"><div class="meta-line"><span class="tag source">${reading.type}</span><span class="tag reconstruction">${reading.sourceStatus}</span></div><h1>${reading.title}</h1><p class="lead">${reading.author} · ${reading.unit}</p>
-      ${contextHelp("Leé primero la pregunta y la tesis reconstruida", "Después seguí los argumentos, abrí los conceptos que necesites y volvé a la fuente desde el panel de trazabilidad. Tu elaboración queda en la sección privada del final.")}
       <div class="callout"><p class="eyebrow">Pregunta de lectura</p><p><strong>${reading.centralQuestion}</strong></p></div>
       <div class="prose"><h2>Tesis reconstruida</h2><p>${reading.thesis}</p>${sections}</div>
       <section class="panel"><p class="eyebrow">Seguir navegando</p><h3>Conceptos relacionados</h3><div class="relations">${concepts}</div><h3 style="margin-top:1.2rem">Actividades</h3><div class="relations">${activities}</div></section>
@@ -215,12 +304,11 @@ async function renderConcept(id) {
   const concept = atlasData.concepts[id];
   if (!concept) return renderNotFound();
   const record = (await getRecord(`concept:${id}`)) || { id: `concept:${id}`, type: "concept", note: "", level: 0 };
-  setChrome(`Glosario / ${concept.name}`, "glossary");
+  setChrome(`Glosario / ${concept.name}`, "glossary", "concept");
   const readings = concept.readings.map(readingId => `<a class="relation" href="#/lectura/${readingId}">${atlasData.readings[readingId].author} · ${atlasData.readings[readingId].title}</a>`).join("") || `<span class="muted">Consultá la lectura correspondiente desde la materia para abrirla en el compendio.</span>`;
   main.innerHTML = `
     <section class="hero"><div class="meta-line"><span class="tag reconstruction">Concepto en construcción</span><span class="tag source">Corpus verificado</span></div><h1>${concept.name}</h1><p class="lead">${concept.short}</p></section>
-    ${contextHelp("Empezá por la orientación breve y después compará las capas", "La misma palabra puede cambiar según el autor y el momento histórico. Por eso el Atlas evita una definición única y separa procedencia, reconstrucción y crítica.")}
-    <section aria-labelledby="layers-title"><p class="eyebrow">Definición estratificada</p><h2 id="layers-title">No mezclar las capas</h2><div class="epistemic-stack"><div class="epistemic-row"><strong>Programa / cátedra</strong><span>${concept.programLayer}</span></div><div class="epistemic-row"><strong>Autor / texto</strong><span>${concept.authorLayer}</span></div><div class="epistemic-row"><strong>Reconstrucción</strong><span>${concept.reconstructionLayer}</span></div><div class="epistemic-row"><strong>Lectura crítica</strong><span>${concept.criticalLayer}</span></div></div></section>
+    <section aria-labelledby="layers-title"><p class="eyebrow">Definición estratificada</p><h2 id="layers-title">Abrí una capa por vez</h2><div class="epistemic-stack"><details class="epistemic-layer" open><summary>Programa / cátedra</summary><p>${concept.programLayer}</p></details><details class="epistemic-layer"><summary>Autor / texto</summary><p>${concept.authorLayer}</p></details><details class="epistemic-layer"><summary>Reconstrucción pedagógica</summary><p>${concept.reconstructionLayer}</p></details><details class="epistemic-layer"><summary>Lectura crítica</summary><p>${concept.criticalLayer}</p></details></div></section>
     <section class="card-grid"><article class="card wide"><p class="eyebrow">Relaciones</p><h2>Este concepto conversa con…</h2><div class="relations">${concept.related.map(related => `<a class="relation" href="#/concepto/${related}">${atlasData.concepts[related].name}</a>`).join("")}</div></article><article class="card"><p class="eyebrow">Volver a los textos</p><h3>Argumentos relacionados</h3><div class="relations">${readings}</div></article></section>
     <section class="study-workspace" aria-labelledby="workspace-title"><p class="eyebrow">Tu memoria académica · privada</p><h2 id="workspace-title">Hacer propio el concepto</h2><p><strong>Pregunta de transferencia:</strong> ${concept.personalPrompt}</p>${levelPicker(record)}<label for="personal-note"><strong>Mi definición, ejemplo u objeción</strong></label><textarea id="personal-note" placeholder="Escribí acá…">${escapeHtml(record.note)}</textarea><div class="workspace-footer"><span class="save-status" id="save-status">Guardado local automático</span><span class="tag">Privado</span></div></section>`;
   bindWorkspace("concept", id, record);
@@ -232,10 +320,9 @@ async function renderActivity(id) {
   const record = (await getRecord(`activity:${id}`)) || { id: `activity:${id}`, type: "activity", note: "", level: 0 };
   const relatedHref = activity.relatedReading ? `#/lectura/${activity.relatedReading}` : `#/concepto/${activity.relatedConcept}`;
   const relatedLabel = activity.relatedReading ? atlasData.readings[activity.relatedReading].title : atlasData.concepts[activity.relatedConcept].name;
-  setChrome(`Actividades / ${activity.title}`, "activities");
+  setChrome(`Actividades / ${activity.title}`, "activities", "activity");
   main.innerHTML = `
     <section class="hero"><div class="meta-line"><span class="tag question">${activity.operation}</span><span class="tag">${activity.duration}</span></div><h1>${activity.title}</h1><p class="lead">${activity.goal}</p><a class="button-text" href="${relatedHref}">Volver a ${relatedLabel} →</a></section>
-    ${contextHelp("Hacé la consigna sin buscar una respuesta perfecta", "El objetivo es dejar evidencia de una operación concreta: explicar, relacionar, objetar o producir. Podés volver después y revisar lo guardado.")}
     <section class="card full"><p class="eyebrow">Consigna</p><h2>${activity.context}</h2><ol class="step-list">${activity.steps.map(step => `<li>${step}</li>`).join("")}</ol></section>
     <section class="study-workspace" aria-labelledby="workspace-title"><p class="eyebrow">Tu respuesta · privada</p><h2 id="workspace-title">Espacio de trabajo</h2>${levelPicker(record)}<label for="personal-note"><strong>Desarrollo</strong></label><textarea id="personal-note">${escapeHtml(record.note || activity.prompt)}</textarea><div class="workspace-footer"><span class="save-status" id="save-status">Guardado local automático al editar</span><span class="tag">Memory Card</span></div></section>`;
   bindWorkspace("activity", id, record);
@@ -281,8 +368,9 @@ function applyTheme(theme, persist = true) {
 themeButton.addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
 applyTheme(document.documentElement.dataset.theme || "light", false);
 
-helpButton.addEventListener("click", openOnboarding);
-memoryHelpButton.addEventListener("click", openOnboarding);
+helpButton.addEventListener("click", () => openHelp(currentHelpTopic));
+memoryHelpButton.addEventListener("click", () => openHelp("memory"));
+helpDialogClose.addEventListener("click", closeHelp);
 onboardingClose.addEventListener("click", closeOnboarding);
 onboardingDismiss.addEventListener("click", closeOnboarding);
 onboardingStart.addEventListener("click", closeOnboarding);
@@ -292,7 +380,14 @@ onboardingDialog.addEventListener("click", event => {
   const outside = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
   if (outside) closeOnboarding();
 });
+helpDialog.addEventListener("click", event => {
+  const bounds = helpDialog.getBoundingClientRect();
+  const outside = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+  if (outside) closeHelp();
+});
 document.addEventListener("click", event => {
+  const helpTrigger = event.target.closest("[data-help-topic]");
+  if (helpTrigger) openHelp(helpTrigger.dataset.helpTopic);
   if (event.target.closest("[data-open-guide]")) openOnboarding();
 });
 
