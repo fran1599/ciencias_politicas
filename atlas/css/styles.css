@@ -99,6 +99,9 @@ p { margin-top: 0; }
 .tag.source { background: #e4edda; }
 .tag.reconstruction { background: #dfe9ef; }
 .tag.question { background: #f3dfd6; }
+.tag.status-developed { background: #e4edda; color: #28513e; }
+.tag.status-current { background: #f5df9d; color: #60470f; }
+.tag.status-mapped { background: #dfe9ef; color: #365a70; }
 .metric-row { display: flex; gap: 1rem; margin: 1rem 0; }
 .metric-row div { flex: 1; }
 .metric-row strong, .metric-row span { display: block; }
@@ -108,6 +111,8 @@ p { margin-top: 0; }
 .progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--forest-2); transition: width .25s ease; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin: 3.5rem 0 1rem; }
 .section-heading h2 { margin-bottom: 0; }
+.section-heading .meta-line { align-items: center; margin-bottom: .55rem; }
+.section-heading .meta-line .eyebrow { margin-bottom: 0; }
 .path-list { display: grid; gap: .75rem; }
 .path-item { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 1rem; padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); text-decoration: none; }
 .path-item:hover { border-color: var(--forest-2); transform: translateY(-1px); }
@@ -177,6 +182,9 @@ p { margin-top: 0; }
 :root[data-theme="dark"] .tag.source { background: #29402e; color: #d9edc9; }
 :root[data-theme="dark"] .tag.reconstruction { background: #263946; color: #d9e8f1; }
 :root[data-theme="dark"] .tag.question { background: #493129; color: #f4d9cf; }
+:root[data-theme="dark"] .tag.status-developed { background: #29402e; color: #d9edc9; }
+:root[data-theme="dark"] .tag.status-current { background: #51441f; color: #f7e6a7; }
+:root[data-theme="dark"] .tag.status-mapped { background: #263946; color: #d9e8f1; }
 :root[data-theme="dark"] .callout { background: #352b18; }
 :root[data-theme="dark"] .button { color: #101713; }
 :root[data-theme="dark"] .button-ghost { color: var(--forest); }
