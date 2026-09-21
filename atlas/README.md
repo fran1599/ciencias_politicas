@@ -1,4 +1,4 @@
-# Atlas personal · prototipo v0.6
+# Atlas personal · prototipo v0.6.1
 
 Prototipo estático, aislado del sitio principal, para convertir el programa de Economía Política I en un recorrido de estudio navegable y conservar localmente la memoria académica personal.
 
@@ -20,12 +20,15 @@ Prototipo estático, aislado del sitio principal, para convertir el programa de 
 - conceptos agrupados por unidad, actividades por capacidad y materiales por función;
 - apartados de lecturas y capas conceptuales desplegables;
 - modo oscuro persistente;
+- propuesta tipográfica de lectura: Literata para textos y títulos, Source Sans 3 para interfaz y caja de lectura limitada a `68ch`;
 - transiciones breves para cambios de ruta, aperturas y diálogos, con desactivación completa mediante `prefers-reduced-motion`;
 - vigilancia epistémica visible mediante capas de procedencia;
 - niveles de elaboración: Reconocer, Comprender, Relacionar, Discutir y Producir;
 - notas y progreso locales en IndexedDB, con respaldo en `localStorage` si no está disponible;
 - exportación e importación de `atlas-memory-v1.json`;
 - sin PDFs, textos completos, credenciales ni datos personales en el repositorio.
+
+Las fuentes están alojadas dentro del repositorio para no depender de servicios tipográficos externos. Literata y Source Sans 3 se redistribuyen bajo SIL Open Font License; sus licencias se conservan en `atlas/fonts/`.
 
 ## Ejecutar
 
